@@ -18,11 +18,13 @@ mongoose
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
 
+const PORT = process.env.PORT || 5000;
+
+// Always export the handler for serverless, but only use it if needed
 export const handler = serverless(app);
 
-// Start server locally if not in production (for development)
-if (process.env.NODE_ENV !== "production") {
-  const PORT = process.env.PORT || 5000;
+// Start server for Render and local development
+if (!process.env.SERVERLESS) {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
